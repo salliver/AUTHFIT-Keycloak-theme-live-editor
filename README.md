@@ -1,4 +1,4 @@
-# MARFI — Keycloak login theme with live branding editor
+# AUTHFIT — Keycloak login theme with live branding editor
 
 A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm.
 
