@@ -1,8 +1,8 @@
 # AUTHFIT — Keycloak login theme with live branding editor
 
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)](##Compatibility)
-[![No build step](https://img.shields.io/badge/build-none-brightgreen)](##Installation)
+[![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)](#Compatibility)
+[![No build step](https://img.shields.io/badge/build-none-brightgreen)](#Installation)
 ![Status](https://img.shields.io/badge/status-active-success)
 [![Level 5](https://badgen.net/badge/AI%20Assistance/Level%205?color=orange)](#AI-Contribution-Disclosure)
 
