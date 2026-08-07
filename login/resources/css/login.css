@@ -1,0 +1,623 @@
+/* =========================================================
+   Mio Tema Custom - Split Screen Login Theme
+   Tweak the CSS variables below to rebrand the whole theme.
+   ========================================================= */
+
+:root {
+  /* Layout */
+  --layout-direction: row;
+  --form-column-width: 45%;
+  --visual-column-width: 55%;
+  --card-max-width: 420px;
+  --card-padding: 2.5rem;
+
+  /* Brand colors */
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-focus: color-mix(in srgb, var(--primary-color) 15%, transparent);
+  --link-color: var(--primary-color);
+
+  /* Surfaces */
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-visual: #0a192f;
+  --bg-overlay: color-mix(in srgb, #0a192f 40%, transparent);
+
+  /* Text */
+  --text-color: #0f172a;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+  --title-color: var(--text-color);
+
+  /* Borders */
+  --border-color: #e2e8f0;
+
+  /* States */
+  --error-color: #dc2626;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --warning-bg: #fffbeb;
+  --warning-border: #fde68a;
+  --info-bg: #eff6ff;
+  --info-border: #bfdbfe;
+
+  /* Typography */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --title-size: 1.5rem;
+  --label-size: 0.9rem;
+  --input-size: 1rem;
+  --input-padding-y: 0.75rem;
+
+  /* Logo */
+  --logo-max-width: 180px;
+  --logo-max-height: 80px;
+
+  /* Shape & depth */
+  --radius-lg: 16px;
+  --radius-sm: 8px;
+  --shadow-card: 0 10px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* ---------- Base ---------- */
+body.custom-body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background: var(--bg-page);
+}
+
+/* ---------- Split layout ---------- */
+.split-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: var(--layout-direction, row);
+}
+
+.form-column {
+  width: var(--form-column-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.visual-column {
+  width: var(--visual-column-width);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-visual);
+}
+
+/* ---------- Background media (image or video) ---------- */
+.background-image,
+.background-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--bg-object-fit, cover);
+  background-size: var(--bg-size, cover);
+  background-position: center;
+}
+
+.background-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-overlay);
+}
+
+/* ---------- Form card ---------- */
+.form-card {
+  position: relative;
+  width: 100%;
+  max-width: var(--card-max-width);
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--card-padding);
+  box-sizing: border-box;
+  box-shadow: var(--shadow-card);
+}
+
+#kc-page-title {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight, 700);
+  margin: 0 0 1.5rem;
+  color: var(--title-color);
+}
+
+/* ---------- Brand logo ---------- */
+.brand-logo {
+  display: block;
+  max-width: min(100%, var(--logo-max-width, 180px));
+  max-height: var(--logo-max-height, 80px);
+  margin: var(--logo-margin, 0 auto 1.5rem);
+  position: var(--logo-position, static);
+  left: var(--logo-pos-left, auto);
+  right: var(--logo-pos-right, auto);
+  top: var(--logo-pos-top, auto);
+  bottom: var(--logo-pos-bottom, auto);
+  object-fit: contain;
+}
+
+/* ---------- Copyright footer ---------- */
+.copyright-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Brand title (Realm Settings -> Display name HTML) ---------- */
+.brand-title {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--title-color);
+}
+
+.brand-title img {
+  max-width: 100%;
+  max-height: 60px;
+  object-fit: contain;
+}
+
+/* ---------- Fields ---------- */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: var(--label-size);
+  font-weight: var(--label-weight, 600);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--input-padding-y, 0.75rem) 1rem;
+  box-sizing: border-box;
+  font-size: var(--input-size);
+  font-weight: var(--input-weight, 400);
+  color: var(--text-color);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-focus);
+}
+
+.input-error {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--error-color);
+}
+
+/* ---------- Options & actions ---------- */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.form-options a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.form-options a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-primary {
+  width: var(--btn-width, 100%);
+  min-height: var(--btn-min-height, auto);
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: var(--button-weight, 600);
+  text-transform: var(--btn-text-transform, none);
+  letter-spacing: var(--btn-letter-spacing, normal);
+  color: var(--text-inverse);
+  background: var(--primary-color);
+  border: none;
+  border-radius: var(--btn-radius, var(--radius-sm));
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.alert-error   { background: var(--error-bg);     color: var(--error-color);   border-color: var(--error-border); }
+.alert-success { background: var(--success-bg);   color: #166534;              border-color: var(--success-border); }
+.alert-warning { background: var(--warning-bg);   color: #92400e;              border-color: var(--warning-border); }
+.alert-info    { background: var(--info-bg);      color: #1e40af;              border-color: var(--info-border); }
+
+/* ---------- Info & social providers ---------- */
+.info-section {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.info-section a {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.info-section a:hover {
+  text-decoration: underline;
+}
+
+.social-providers {
+  margin-top: 1.5rem;
+}
+
+.social-providers h2 {
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--text-muted);
+  margin: 1.25rem 0;
+}
+
+.social-providers hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+}
+
+.social-providers ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.social-providers a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-color);
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.social-providers a:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-focus);
+}
+
+/* ---------- Attempted username (hidden-username flows) ---------- */
+.attempted-username {
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.attempted-username a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+/* ---------- Required fields note ---------- */
+.required-fields-note {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.required {
+  color: var(--error-color);
+}
+
+/* ---------- Actions & buttons ---------- */
+.form-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-primary.btn-block {
+  width: var(--btn-width, 100%);
+}
+
+.btn-default {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-default:hover {
+  background: var(--bg-page);
+  border-color: var(--primary-color);
+}
+
+.btn-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-row .btn {
+  flex: 1;
+  width: auto;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Password visibility toggle ---------- */
+.input-group {
+  position: relative;
+}
+
+.input-group .form-input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+}
+
+.password-toggle:hover {
+  color: var(--text-color);
+  background: var(--primary-focus);
+}
+
+.password-toggle i {
+  font-style: normal;
+}
+
+.icon-eye,
+.icon-eye-slash {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.icon-eye {
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%223%22/%3E%3C/svg%3E');
+}
+
+.icon-eye-slash {
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94%22/%3E%3Cpath d=%22M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19%22/%3E%3Cpath d=%22M1 1l22 22%22/%3E%3Cpath d=%22M9.9 9.9a3 3 0 0 0 4.24 4.24%22/%3E%3C/svg%3E');
+}
+
+/* ---------- Selects, textareas ---------- */
+select.form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 16 16%22%3E%3Cpath fill=%22%2364748b%22 d=%22M8 10l4-5H4l4 5z%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+textarea.form-input {
+  min-height: 6rem;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* ---------- Generic instructions ---------- */
+.instruction {
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ---------- Error / info message pages ---------- */
+.error-message a,
+.info-message a {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.error-message a:hover,
+.info-message a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- OTP credential list ---------- */
+.otp-credential {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  font-size: 0.9rem;
+}
+
+.otp-credential:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-focus);
+}
+
+.otp-credential input {
+  accent-color: var(--primary-color);
+}
+
+/* ---------- User profile (register / update-profile) ---------- */
+.profile-group-header {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.profile-group-title label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--title-color);
+}
+
+.profile-group-description label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.form-hint {
+  margin: 0.35rem 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--label-size);
+}
+
+.option-item input {
+  accent-color: var(--primary-color);
+}
+
+.option-label {
+  color: var(--text-color);
+}
+
+.option-disabled {
+  color: var(--text-muted);
+}
+
+/* ---------- Terms box ---------- */
+.terms-box {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-page);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.terms-box .form-label {
+  margin-bottom: 0.5rem;
+}
+
+.checkbox-input {
+  margin-right: 0.4rem;
+  accent-color: var(--primary-color);
+}
+
+.checkbox-label {
+  color: var(--text-color);
+}
+
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .split-layout {
+    flex-direction: column-reverse;
+  }
+
+  .visual-column {
+    width: 100%;
+    height: 30vh;
+  }
+
+  .form-column {
+    width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
+  .form-card {
+    box-shadow: none;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .visual-column {
+    display: none;
+  }
+}
