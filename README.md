@@ -19,7 +19,7 @@ Built for Keycloak `26.5.5`, but the FTL/theme API surface it uses is stable acr
 ## Structure
 
 ```
-MARFI/
+AUTHFIT/
 ├── login/                # login page theme (parent = keycloak)
 │   ├── template.ftl      # shared layout; reads kc.* realm attributes
 │   ├── login.ftl, login-username.ftl, login-password.ftl, …  # overridden flow pages
@@ -38,7 +38,7 @@ MARFI/
 
 ## Installation
 
-1. Copy this folder to the Keycloak themes directory (e.g. `/opt/keycloak/themes/MARFI`), or mount it read-only, e.g.:
+1. Copy this folder to the Keycloak themes directory (e.g. `/opt/keycloak/themes/AUTHFIT`), or mount it read-only, e.g.:
 
    ```yaml
    services:
@@ -48,7 +48,7 @@ MARFI/
          - ./themes/MARFI:/opt/keycloak/themes/MARFI:ro
    ```
 
-2. In the admin console set the realm's **Login Theme** to `MARFI` (the *Admin Console Theme* only needs `MARFI` if you want the Branding editor).
+2. In the admin console set the realm's **Login Theme** to `AUTHFIT` (the *Admin Console Theme* only needs `AUTHFIT` if you want the Branding editor).
 
 3. Open the login page of that realm — the defaults from `login/theme.properties` apply.
 
