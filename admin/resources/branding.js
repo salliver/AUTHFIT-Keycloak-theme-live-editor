@@ -709,7 +709,7 @@ const SECTIONS = [
         key: "presets",
         label: "Presets",
         type: "presets",
-        hint: "Export the current values as a .afit file (or copy as JSON) and import .afit / .json files. Importing fills the fields — press Save to apply them to the realm.",
+        hint: "Export the current values as a .afit file (or copy as JSON) and import .afit / .json files, or paste their content below. Importing fills the fields — press Save to apply them to the realm.",
       },
     ],
   },
@@ -1183,27 +1183,50 @@ function build() {
         copyBtn.textContent = "Copy JSON";
         copyBtn.addEventListener("click", copyPresetJson);
 
-        const importBtn = document.createElement("button");
-        importBtn.type = "button";
-        importBtn.className = "mio-branding-btn mio-branding-btn-upload";
-        importBtn.textContent = "Import .afit / .json";
+        const importLabel = document.createElement("label");
+        importLabel.className = "mio-branding-btn mio-branding-btn-upload";
+        importLabel.textContent = "Import .afit / .json";
 
         const presetFileInput = document.createElement("input");
         presetFileInput.type = "file";
         presetFileInput.accept = ".afit,.json,application/json";
-        presetFileInput.style.display = "none";
+        presetFileInput.className = "mio-file-input-sr";
+        presetFileInput.setAttribute("aria-label", "Import .afit / .json file");
 
-        importBtn.addEventListener("click", () => presetFileInput.click());
         presetFileInput.addEventListener("change", () => {
-          importPresetFile(presetFileInput.files && presetFileInput.files[0]);
+          const file = presetFileInput.files && presetFileInput.files[0];
+          if (!file) {
+            setMsg("error", "No file selected.");
+            return;
+          }
+          importPresetFile(file);
           presetFileInput.value = "";
+        });
+
+        const pasteArea = document.createElement("textarea");
+        pasteArea.className = "mio-preset-paste";
+        pasteArea.placeholder =
+          "…or paste the .afit / JSON content here and press Apply";
+
+        const applyPasteBtn = document.createElement("button");
+        applyPasteBtn.type = "button";
+        applyPasteBtn.className = "mio-branding-btn mio-branding-btn-upload";
+        applyPasteBtn.textContent = "Apply paste";
+        applyPasteBtn.addEventListener("click", () => {
+          try {
+            applyPreset(pasteArea.value);
+          } catch (e) {
+            setMsg("error", "Import failed: " + e.message);
+          }
         });
 
         btns.appendChild(exportBtn);
         btns.appendChild(copyBtn);
-        btns.appendChild(importBtn);
-        btns.appendChild(presetFileInput);
+        btns.appendChild(importLabel);
+        importLabel.appendChild(presetFileInput);
         wrap.appendChild(btns);
+        wrap.appendChild(pasteArea);
+        wrap.appendChild(applyPasteBtn);
         row.appendChild(wrap);
       } else {
         const input = document.createElement("input");
@@ -1397,7 +1420,7 @@ const PREVIEW_VARS = [
   ["btnLetterSpacing", "--btn-letter-spacing", "normal"],
 ];
 
-const VERSION_DEFAULTS = { buildNumber: "1.2.0", releaseName: "Azure Heron" };
+const VERSION_DEFAULTS = { buildNumber: "1.2.1", releaseName: "Amber Falcon" };
 
 const SIZE_FIELDS = new Set([
   "titleSize",

@@ -733,3 +733,44 @@
     gap: 8px;
     flex-wrap: wrap;
 }
+
+.mio-presets-btns label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.mio-file-input-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+.mio-preset-paste {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 90px;
+    margin-top: 12px;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #334155;
+    background: #f8fafc;
+    resize: vertical;
+}
+
+.mio-preset-paste:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
