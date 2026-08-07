@@ -8,8 +8,10 @@
 A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm — no rebuild, no redeploy.
 
 Built for Keycloak `26.5.5`, but the FTL/theme API surface it uses is stable across 22–26.
+
+
 <video src= "https://github.com/user-attachments/assets/4ed81199-afb1-420b-95e7-99052f5467fc" controls width="700"></video>
-[![blelo.png](https://s13.gifyu.com/images/blelo.png)](https://gifyu.com/image/blelo)
+
 
 ## Why AUTHFIT
 
