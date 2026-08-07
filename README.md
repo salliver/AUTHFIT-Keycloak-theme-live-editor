@@ -45,7 +45,7 @@ AUTHFIT/
      keycloak:
        image: quay.io/keycloak/keycloak:26.5.5
        volumes:
-         - ./themes/MARFI:/opt/keycloak/themes/MARFI:ro
+         - ./themes/MARFI:/opt/keycloak/themes/AUTHFIT:ro
    ```
 
 2. In the admin console set the realm's **Login Theme** to `AUTHFIT` (the *Admin Console Theme* only needs `AUTHFIT` if you want the Branding editor).
