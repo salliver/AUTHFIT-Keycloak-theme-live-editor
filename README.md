@@ -45,7 +45,7 @@ AUTHFIT/
      keycloak:
        image: quay.io/keycloak/keycloak:26.5.5
        volumes:
-         - ./themes/MARFI:/opt/keycloak/themes/AUTHFIT:ro
+         - ./themes/AUTHFIT:/opt/keycloak/themes/AUTHFIT:ro
    ```
 
 2. In the admin console set the realm's **Login Theme** to `AUTHFIT` (the *Admin Console Theme* only needs `AUTHFIT` if you want the Branding editor).
@@ -57,7 +57,7 @@ AUTHFIT/
 Open the admin console and click the floating **Branding** button. Changes preview live in a side pane; press **Save** to persist them as `kc.*` realm attributes (via the admin REST API). The login page picks them up on the next refresh.
 
 - Clearing a field removes the realm attribute on save, so the page falls back to the `theme.properties` default.
-- The **Presets** tab exports the current editor state as an `.afit` file (`{ format: "marfi-afit", version: 1, theme, name, exportedAt, values }`) containing only the non-default `kc.*` values, or copies it as JSON. Importing fills the editor (it never saves — press Save).
+- The **Presets** tab exports the current editor state as an `.afit` file (`{ format: "AUTHFIT-afit", version: 1, theme, name, exportedAt, values }`) containing only the non-default `kc.*` values, or copies it as JSON. Importing fills the editor (it never saves — press Save).
 - Values can also be managed directly through the Admin REST API, e.g.:
 
   ```sh
