@@ -1,8 +1,19 @@
-# MARFI — Keycloak login theme with live branding editor
+# AUTHFIT — Keycloak login theme with live branding editor
 
-A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm.
+[![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
+![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)
+![No build step](https://img.shields.io/badge/build-none-brightgreen)
+![Status](https://img.shields.io/badge/status-active-success)
+
+A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm — no rebuild, no redeploy.
 
 Built for Keycloak `26.5.5`, but the FTL/theme API surface it uses is stable across 22–26.
+
+[![blelo.png](https://s13.gifyu.com/images/blelo.png)](https://gifyu.com/image/blelo)
+
+## Why AUTHFIT
+
+Keycloak's login theme is normally edited by hand: FTL templates, CSS, a rebuild or a container restart to see anything. AUTHFIT turns the whole visual surface — layout, colors, gradients, typography, logo, button styling, footer — into realm attributes you set from a **live editor inside the admin console**, with an instant preview pane. Changes are saved via the standard Admin REST API, so nothing about the underlying Keycloak setup changes; you're just filling in `kc.*` attributes through a UI instead of `curl`.
 
 ## Features
 
@@ -19,7 +30,7 @@ Built for Keycloak `26.5.5`, but the FTL/theme API surface it uses is stable acr
 ## Structure
 
 ```
-MARFI/
+AUTHFIT/
 ├── login/                # login page theme (parent = keycloak)
 │   ├── template.ftl      # shared layout; reads kc.* realm attributes
 │   ├── login.ftl, login-username.ftl, login-password.ftl, …  # overridden flow pages
@@ -38,18 +49,17 @@ MARFI/
 
 ## Installation
 
-1. Copy this folder to the Keycloak themes directory (e.g. `/opt/keycloak/themes/MARFI`), or mount it read-only, e.g.:
+1. Copy this folder to the Keycloak themes directory (e.g. `/opt/keycloak/themes/AUTHFIT`), or mount it read-only, e.g.:
 
    ```yaml
    services:
      keycloak:
        image: quay.io/keycloak/keycloak:26.5.5
        volumes:
-         - ./themes/MARFI:/opt/keycloak/themes/MARFI:ro
+         - ./themes/AUTHFIT:/opt/keycloak/themes/AUTHFIT:ro
    ```
 
-2. In the admin console set the realm's **Login Theme** to `MARFI` (the *Admin Console Theme* only needs `MARFI` if you want the Branding editor).
-
+2. In the admin console set the realm's **Login Theme** to `AUTHFIT` (the _Admin Console Theme_ only needs `AUTHFIT` if you want the Branding editor).
 3. Open the login page of that realm — the defaults from `login/theme.properties` apply.
 
 ## Using the Branding editor
@@ -57,10 +67,10 @@ MARFI/
 Open the admin console and click the floating **Branding** button. Changes preview live in a side pane; press **Save** to persist them as `kc.*` realm attributes (via the admin REST API). The login page picks them up on the next refresh.
 
 - Clearing a field removes the realm attribute on save, so the page falls back to the `theme.properties` default.
-- The **Presets** tab exports the current editor state as an `.afit` file (`{ format: "marfi-afit", version: 1, theme, name, exportedAt, values }`) containing only the non-default `kc.*` values, or copies it as JSON. Importing fills the editor (it never saves — press Save).
+- The **Presets** tab exports the current editor state as an `.afit` file (`{ format: "AUTHFIT-afit", version: 1, theme, name, exportedAt, values }`) containing only the non-default `kc.*` values, or copies it as JSON. Importing fills the editor (it never saves — press **Save**).
 - Values can also be managed directly through the Admin REST API, e.g.:
 
-  ```sh
+  ```bash
   curl -X PUT "$KEYCLOAK/admin/realms/<realm>" \
     -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" \
@@ -73,6 +83,17 @@ The full list of `kc.*` settings is documented in `login/theme.properties`.
 
 No build, test, or lint tooling — this is static FreeMarker + CSS + JS deployed by mounting the directory into the Keycloak container. The dev setup mounts this folder into a local Keycloak with theme caching disabled, so changes apply on browser refresh.
 
+## Compatibility
+
+| Keycloak version | Status                             |
+| ---------------- | ---------------------------------- |
+| 26.5.5           | ✅ Primary target / tested         |
+| 22.x – 26.x      | ✅ FTL/theme API surface is stable |
+
+## Contributing
+
+Issues and PRs are welcome. If you hit a rendering quirk on a Keycloak version other than 26.5.5, please open an issue with the version and a screenshot.
+
 ## License
 
-[GPL-3.0](./LICENSE)
+[GPL-3.0](LICENSE)
