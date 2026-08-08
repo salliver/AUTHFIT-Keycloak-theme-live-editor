@@ -98,7 +98,7 @@ No build, test, or lint tooling — this is static FreeMarker + CSS + JS deploye
 > [!IMPORTANT]
 > This project uses [Level 5 AI assistance](https://www.visidata.org/blog/2026/ai/) — AI generated the majority of the code, but the human was involved at every step, reviewing results and validating behavior. This was the author's first Keycloak project; >AI (opencode) was used heavily to bridge the gap in FreeMarker/Keycloak-specific knowledge. The core architecture — how edited values are persisted as realm attributes and injected into the login page's <style> block, how templates and images are saved >and imported — was designed by the author, who tested extensively across a local Docker environment, a systemd-managed Keycloak instance, and production.
 >
->Real-world validation: in production use since deployment, with only a handful of feature additions requested afterward (e.g. gradient background support) rather than bug fixes — no significant issues reported. As a login theme, AUTHFIT does not modify >any core Keycloak configuration — it only affects the rendered login/admin UI, so it carries low operational risk and can be reverted instantly by switching the realm's theme back.
+>Real-world validation: in production use since deployment, with only a handful of feature additions requested afterward (e.g. gradient background support) rather than bug fixes — no significant issues reported. As a login theme, AUTHFIT does not modify >any core Keycloak configuration — it only affects the rendered login/admin UI, so it carries low to none operational risk and can be reverted instantly by switching the realm's theme back.
 >
 >**AI Model**: opencode
 
