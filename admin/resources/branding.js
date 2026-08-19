@@ -1523,7 +1523,7 @@ function normalizeFieldValue(f, value) {
     }
     return ""; // valore non valido: scartato, ricade sul default del tema
   }
-  return v:
+  return v;
 }
 
 function capFirst(s) {
