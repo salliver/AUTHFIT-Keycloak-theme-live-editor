@@ -105,7 +105,11 @@ No build, test, or lint tooling — this is static FreeMarker + CSS + JS deploye
 
 ## Contributing
 
-Issues and PRs are welcome. If you hit a rendering quirk on a Keycloak version other than 26.5.5, please open an issue with the version and a screenshot.
+This project is maintained on a best-effort basis. Small, well-scoped
+bug fixes are welcome as PRs. For new features or larger changes,
+please fork the repo instead of opening a PR — feel free to build on
+top of AUTHFIT and make it your own. If your fork ends up being
+generally useful, drop a link here and I'll happily reference it.
 
 ## License
 
