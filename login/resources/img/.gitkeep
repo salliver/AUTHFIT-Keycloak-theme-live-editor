@@ -1,0 +1,6 @@
+Drop your own licensed background images and logo here, then reference them via
+kc.backgroundPath / kc.logoPath (or the Branding editor).
+
+Note: this repo does not ship stock images (StockCake/Unsplash photos are not
+redistributable). The theme defaults to a solid/gradient visual panel and no
+logo until you add files here.
