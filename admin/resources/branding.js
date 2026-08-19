@@ -398,7 +398,7 @@ const SECTIONS = [
         label: "Title size",
         type: "text",
         attr: "kc.titleSize",
-        def: "",
+        def: "1.5rem",
         hint: "e.g. 1.5rem",
       },
       {
@@ -406,7 +406,7 @@ const SECTIONS = [
         label: "Label size",
         type: "text",
         attr: "kc.labelSize",
-        def: "",
+        def: "0.9rem",
         hint: "e.g. 0.9rem",
       },
       {
@@ -414,7 +414,7 @@ const SECTIONS = [
         label: "Input size",
         type: "text",
         attr: "kc.inputSize",
-        def: "",
+        def: "1rem",
         hint: "e.g. 1rem",
       },
       {
@@ -422,7 +422,7 @@ const SECTIONS = [
         label: "Input field height",
         type: "text",
         attr: "kc.inputPadding",
-        def: "",
+        def: "0.75rem",
         hint: "Vertical padding of the fields, e.g. 0.75rem",
       },
       {
@@ -521,7 +521,7 @@ const SECTIONS = [
         label: "Logo max width",
         type: "text",
         attr: "kc.logoMaxWidth",
-        def: "",
+        def: "180px",
         hint: "e.g. 180px",
       },
       {
@@ -529,7 +529,7 @@ const SECTIONS = [
         label: "Logo max height",
         type: "text",
         attr: "kc.logoMaxHeight",
-        def: "",
+        def: "80px",
         hint: "e.g. 80px",
       },
       {
@@ -618,7 +618,7 @@ const SECTIONS = [
         label: "Form card max width",
         type: "text",
         attr: "kc.cardMaxWidth",
-        def: "",
+        def: "420px",
         hint: "e.g. 420px",
       },
       {
@@ -626,7 +626,7 @@ const SECTIONS = [
         label: "Form card padding",
         type: "text",
         attr: "kc.cardPadding",
-        def: "",
+        def: "2.5rem",
         hint: "e.g. 2.5rem",
       },
       {
@@ -634,7 +634,7 @@ const SECTIONS = [
         label: "Form card radius",
         type: "text",
         attr: "kc.cardRadius",
-        def: "",
+        def: "16px",
         hint: "e.g. 16px",
       },
       {
@@ -642,7 +642,7 @@ const SECTIONS = [
         label: "Input / button radius",
         type: "text",
         attr: "kc.inputRadius",
-        def: "",
+        def: "8px",
         hint: "e.g. 8px",
       },
       {
@@ -650,7 +650,7 @@ const SECTIONS = [
         label: "Form card shadow",
         type: "text",
         attr: "kc.shadowCard",
-        def: "",
+        def: "0 10px 40px rgba(15, 23, 42, 0.08)",
         hint: "CSS box-shadow, e.g. 0 10px 40px rgba(15,23,42,0.08). A single number sets the blur; invalid values are ignored.",
       },
       {
@@ -658,7 +658,7 @@ const SECTIONS = [
         label: "Login button width",
         type: "text",
         attr: "kc.btnWidth",
-        def: "",
+        def: "100%",
         hint: "e.g. 100%, auto, or 320px",
       },
       {
@@ -1340,10 +1340,14 @@ function themeResourcesBase(themeKey) {
   try {
     const link = document.querySelector('link[href*="branding.css"]');
     if (!link) return "";
-    const href = link.href.replace(/\/branding\.css.*$/, "");
-    const m = href.match(/^(.*\/resources\/[^/]+\/)/);
-    if (!m) return href;
-    return m[1] + (themeKey || href.split("/").pop());
+    const url = new URL(link.href, window.location.href);
+    const parts = url.pathname.split("/").filter(Boolean);
+    const idx = parts.indexOf("resources");
+    if (idx === -1) return "";
+    const origin = url.origin;
+    const theme = themeKey || (parts[idx + 1] || "");
+    if (!theme) return "";
+    return origin + "/resources/" + theme + "/login/";
   } catch (e) {}
   return "";
 }
@@ -1420,7 +1424,7 @@ const PREVIEW_VARS = [
   ["btnLetterSpacing", "--btn-letter-spacing", "normal"],
 ];
 
-const VERSION_DEFAULTS = { buildNumber: "1.2.1", releaseName: "Amber Falcon" };
+const VERSION_DEFAULTS = { buildNumber: "1.2.3", releaseName: "Slate Raven" };
 
 const SIZE_FIELDS = new Set([
   "titleSize",
@@ -2014,10 +2018,10 @@ async function saveBranding() {
 
 function sanitizeFileName(s) {
   return (
-    (s || "marfi-preset")
+    (s || "AUTHFIT-preset")
       .replace(/[^a-z0-9-_ ]/gi, "_")
       .replace(/\s+/g, "_")
-      .slice(0, 60) || "marfi-preset"
+      .slice(0, 60) || "AUTHFIT-preset"
   );
 }
 
@@ -2035,11 +2039,11 @@ function buildPresetValues() {
 
 function presetPayload() {
   const name =
-    rawValue("presetName") || realmSelect().value || "marfi-preset";
+    rawValue("presetName") || realmSelect().value || "AUTHFIT-preset";
   return {
-    format: "marfi-afit",
+    format: "AUTHFIT-afit",
     version: 1,
-    theme: "MARFI",
+    theme: "AUTHFIT",
     name: name,
     exportedAt: new Date().toISOString(),
     values: buildPresetValues(),

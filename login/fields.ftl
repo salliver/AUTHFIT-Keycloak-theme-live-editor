@@ -1,3 +1,10 @@
+<#function loginText attrName propDefault msgKey>
+    <#local v = realm.getAttribute(attrName)!''>
+    <#if v?has_content><#return v></#if>
+    <#if propDefault?has_content><#return propDefault></#if>
+    <#return msg(msgKey)>
+</#function>
+
 <#macro usernameField id='username' value='' autocomplete='username' errorFields='username' tabindex='' autofocus=true>
     <div class="form-group">
         <label for="${id}" class="form-label">

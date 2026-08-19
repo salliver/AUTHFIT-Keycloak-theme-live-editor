@@ -3,7 +3,7 @@
 <#import "passkeys.ftl" as passkeys>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('username') displayInfo=(realm.password && realm.registrationAllowed && !registrationDisabled??); section>
     <#if section = "header">
-        ${msg("loginAccountTitle")}
+        ${fields.loginText('kc.loginTitle', properties.loginTitle!, 'loginAccountTitle')}
     <#elseif section = "form">
         <#if realm.password>
             <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">

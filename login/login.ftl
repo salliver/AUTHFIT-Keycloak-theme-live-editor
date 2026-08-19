@@ -36,9 +36,17 @@
 
                 <div class="form-group">
                     <label for="password" class="form-label">${loginText('kc.passwordLabel', properties.passwordLabel!, 'password')}</label>
-                    <input tabindex="3" id="password" class="form-input" name="password" type="password"
-                           autocomplete="current-password"
-                           aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>" />
+                    <div class="input-group">
+                        <input tabindex="3" id="password" class="form-input" name="password" type="password"
+                               autocomplete="current-password"
+                               aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>" />
+                        <button type="button" class="password-toggle" aria-label="${msg('showPassword')}"
+                                aria-controls="password" data-password-toggle
+                                data-icon-show="icon-eye" data-icon-hide="icon-eye-slash"
+                                data-label-show="${msg('showPassword')}" data-label-hide="${msg('hidePassword')}">
+                            <i class="icon-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
                     <#if usernameHidden?? && messagesPerField.existsError('username','password')>
                         <span id="input-error" class="input-error" aria-live="polite">
                             ${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}
@@ -66,6 +74,7 @@
                     <button tabindex="7" id="kc-login" name="login" type="submit" class="btn btn-primary">${loginText('kc.loginButtonText', properties.loginButtonText!, 'doLogIn')}</button>
                 </div>
             </form>
+            <script type="module" src="${url.resourcesPath}/js/passwordVisibility.js"></script>
         </#if>
     <#elseif section = "info">
         <#if realm.password && realm.registrationAllowed && !registrationDisabled??>

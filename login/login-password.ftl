@@ -2,7 +2,7 @@
 <#import "fields.ftl" as fields>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('password'); section>
     <#if section = "header">
-        ${msg("doLogIn")}
+        ${fields.loginText('kc.loginTitle', properties.loginTitle!, 'doLogIn')}
     <#elseif section = "form">
         <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">
             <@fields.passwordField

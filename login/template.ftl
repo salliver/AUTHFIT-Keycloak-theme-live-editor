@@ -25,7 +25,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <#if properties.meta?has_content>
         <#list properties.meta?split(' ') as meta>
-            <meta name="${meta?split('==')[0]}" content="${meta?split('==')[1]}"/>
+            <#if meta?split('==')?size == 2>
+                <meta name="${meta?split('==')[0]}" content="${meta?split('==')[1]}"/>
+            </#if>
         </#list>
     </#if>
     <title>${title!}</title>

@@ -181,6 +181,7 @@ body.custom-body {
 
 .form-input {
   width: 100%;
+  field-sizing: fixed;
   padding: var(--input-padding-y, 0.75rem) 1rem;
   box-sizing: border-box;
   font-size: var(--input-size);
@@ -412,9 +413,13 @@ body.custom-body {
 /* ---------- Password visibility toggle ---------- */
 .input-group {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .input-group .form-input {
+  flex: 1 1 auto;
+  min-width: 0;
   padding-right: 3rem;
 }
 
