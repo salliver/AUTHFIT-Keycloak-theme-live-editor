@@ -1,13 +1,14 @@
 # AUTHFIT — Keycloak login theme with live branding editor
 
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)
-![No build step](https://img.shields.io/badge/build-none-brightgreen)
+[![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)](#Compatibility)
+[![No build step](https://img.shields.io/badge/build-none-brightgreen)](#Installation)
 ![Status](https://img.shields.io/badge/status-active-success)
+[![Level 5](https://badgen.net/badge/AI%20Assistance/Level%205?color=orange)](#AI-Contribution-Disclosure)
 
 A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm — no rebuild, no redeploy.
 
-Built for Keycloak `26.5.5`, but the FTL/theme API surface it uses is stable across 22–26.
+Built for Keycloak `26.5.5`, with a `legacy` version to support 22–25.
 
 
 <video src= "https://github.com/user-attachments/assets/4ed81199-afb1-420b-95e7-99052f5467fc" controls width="700"></video>
@@ -90,7 +91,17 @@ No build, test, or lint tooling — this is static FreeMarker + CSS + JS deploye
 | Keycloak version | Status                             |
 | ---------------- | ---------------------------------- |
 | 26.5.5           | ✅ Primary target / tested         |
-| 22.x – 26.x      | ✅ FTL/theme API surface is stable |
+| 22.x – 24.x      | ✅ Use the version in [Authfit Legacy Branch](https://github.com/salliver/AUTHFIT-Keycloak-theme-live-editor/tree/AUTHFIT-legacy_22.x-suport) |
+
+## AI Contribution Disclosure
+![Level 5](https://badgen.net/badge/AI%20Assistance/Level%205?color=orange)
+> [!IMPORTANT]
+> This project uses [Level 5 AI assistance](https://www.visidata.org/blog/2026/ai/) — AI generated the majority of the code, but the human was involved at every step, reviewing results and validating behavior. This was the author's first Keycloak project; >AI (opencode) was used heavily to bridge the gap in FreeMarker/Keycloak-specific knowledge. The core architecture — how edited values are persisted as realm attributes and injected into the login page's <style> block, how templates and images are saved >and imported — was designed by the author, who tested extensively across a local Docker environment, a systemd-managed Keycloak instance, and production.
+>
+>Real-world validation: in production use since deployment, with only a handful of feature additions requested afterward (e.g. gradient background support) rather than bug fixes — no significant issues reported. As a login theme, AUTHFIT does not modify >any core Keycloak configuration — it only affects the rendered login/admin UI, so it carries low to none operational risk and can be reverted instantly by switching the realm's theme back.
+>
+>**AI Model**: opencode
+
 
 ## Contributing
 
