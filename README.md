@@ -1,101 +1,76 @@
-# AUTHFIT — Keycloak login theme with live branding editor
+# AUTHFIT compatibility
 
-[![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)
-![No build step](https://img.shields.io/badge/build-none-brightgreen)
-![Status](https://img.shields.io/badge/status-active-success)
+This document describes the compatibility of the modified AUTHFIT theme and
+the accompanying `authfit-freemarker` provider.
 
-A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm — no rebuild, no redeploy.
+## Summary
 
-Built for Keycloak `26.5.5`, but the FTL/theme API surface it uses is stable across 22–26.
+| Keycloak version | Status with the current implementation |
+|---|---|
+| **22.0.3** | **Confirmed working** with the provider and the custom admin `index.ftl`. |
+| **22.x** | Likely compatible, but only 22.0.3 has been tested. |
+| **23.x–24.x** | Expected to require the provider and the custom admin `index.ftl` workaround. Version-specific testing is still recommended. |
+| **25.x** | Not verified. Realm attributes are available directly, but admin v2 custom-script loading and the version-specific provider/template details require testing. |
+| **26.x** | Use the stock AUTHFIT theme without this provider or the compatibility changes. |
 
+## Why the provider is needed before Keycloak 25
 
-<video src= "https://github.com/user-attachments/assets/4ed81199-afb1-420b-95e7-99052f5467fc" controls width="700"></video>
+The stock AUTHFIT login templates read realm attributes through
+`realm.getAttribute(...)`. Keycloak 22.0.3, 23.0.0, and 24.0.0 do not expose
+`getAttribute()` or `getAttributes()` on the login `RealmBean`. Those methods
+are present starting in Keycloak 25.0.0.
 
+For Keycloak 22–24, this implementation therefore injects the realm attribute
+map into the FreeMarker model as `realmAttributes`. The modified templates
+read values using expressions such as:
 
-## Why AUTHFIT
-
-Keycloak's login theme is normally edited by hand: FTL templates, CSS, a rebuild or a container restart to see anything. AUTHFIT turns the whole visual surface — layout, colors, gradients, typography, logo, button styling, footer — into realm attributes you set from a **live editor inside the admin console**, with an instant preview pane. Changes are saved via the standard Admin REST API, so nothing about the underlying Keycloak setup changes; you're just filling in `kc.*` attributes through a UI instead of `curl`.
-
-## Features
-
-- **Split-layout login page** — configurable form column vs. visual panel (image or video) with `cover` / `contain` / `fill` / `auto` background fit and an overlay tint.
-- **Surface gradients** — page, form card, and visual panel backgrounds can each be a solid color or a `linear-gradient` (two colors + angle).
-- **Full palette control** — primary/hover, links, text, muted text, title, page/card backgrounds, borders, error color.
-- **Typography** — font family (incl. live Google Fonts lookup), per-text font weights for title, labels, inputs, and buttons.
-- **Logo** — position via CSS margin or absolute % anchoring to the login card; max size capped to the card.
-- **Login button styling** — width, min-height, radius, text-transform, letter-spacing.
-- **Copyright footer** — optional custom text under the form card.
-- **Preset export / import** — save the editor state as a standalone `.afit` file (JSON with metadata) and reload it later; plain `.json` also accepted on import.
-- **No build tooling** — edit and refresh. Theme caching is disabled in the dev setup.
-
-## Structure
-
-```
-AUTHFIT/
-├── login/                # login page theme (parent = keycloak)
-│   ├── template.ftl      # shared layout; reads kc.* realm attributes
-│   ├── login.ftl, login-username.ftl, login-password.ftl, …  # overridden flow pages
-│   ├── fields.ftl        # shared field macros (username/password/social/…)
-│   ├── user-profile-commons.ftl, register-commons.ftl
-│   ├── theme.properties  # defaults for every kc.* setting
-│   └── resources/
-│       ├── css/login.css
-│       └── img/          # default background images + logo
-└── admin/                # admin console theme (parent = keycloak.v2)
-    ├── theme.properties
-    └── resources/
-        ├── branding.js   # the Branding editor (dependency-free, no modules)
-        └── branding.css
+```ftl
+${(realmAttributes[name])!fallback}
 ```
 
-## Installation
+The provider is built against Keycloak 22.0.3 internal login-provider APIs.
+Although it works on 22.0.3, binary compatibility across later Keycloak major
+versions is not guaranteed. Rebuild and test it against the target Keycloak
+version before deployment.
 
-1. Copy this folder to the Keycloak themes directory (e.g. `/opt/keycloak/themes/AUTHFIT`), or mount it read-only, e.g.:
+## Why the admin template workaround is needed
 
-   ```yaml
-   services:
-     keycloak:
-       image: quay.io/keycloak/keycloak:26.5.5
-       volumes:
-         - ./themes/AUTHFIT:/opt/keycloak/themes/AUTHFIT:ro
-   ```
+AUTHFIT declares its admin script in `admin/theme.properties`:
 
-2. In the admin console set the realm's **Login Theme** to `AUTHFIT` (the _Admin Console Theme_ only needs `AUTHFIT` if you want the Branding editor).
-3. Open the login page of that realm — the defaults from `login/theme.properties` apply.
+```properties
+scripts=branding.js
+```
 
-## Using the Branding editor
+The affected Keycloak admin v2 templates did not render the `properties.scripts`
+list, so `branding.js` was not loaded. The custom `admin/index.ftl` adds that
+script loop.
 
-Open the admin console and click the floating **Branding** button. Changes preview live in a side pane; press **Save** to persist them as `kc.*` realm attributes (via the admin REST API). The login page picks them up on the next refresh.
+The admin v2 custom-script problem was reported for Keycloak 24.0.1 and tracked
+for releases 25.0.1 and 26.0.0. Keycloak 26.0.0 includes the script-loading
+support, which is why the stock theme works there.
 
-- Clearing a field removes the realm attribute on save, so the page falls back to the `theme.properties` default.
-- The **Presets** tab exports the current editor state as an `.afit` file (`{ format: "AUTHFIT-afit", version: 1, theme, name, exportedAt, values }`) containing only the non-default `kc.*` values, or copies it as JSON. Importing fills the editor (it never saves — press **Save**).
-- Values can also be managed directly through the Admin REST API, e.g.:
+The current custom `admin/index.ftl` was copied from Keycloak 22. It contains
+Keycloak-22-specific bundled asset names and must not automatically be reused
+unchanged on another major version. If supporting Keycloak 23–25, copy the
+matching `index.ftl` from that Keycloak version and retain the custom
+`properties.scripts` loop if that version still needs it.
 
-  ```bash
-  curl -X PUT "$KEYCLOAK/admin/realms/<realm>" \
-    -H "Authorization: Bearer $TOKEN" \
-    -H "Content-Type: application/json" \
-    --data '{"attributes": {"kc.primaryColor": "#4f46e5"}}'
-  ```
+## Stock AUTHFIT versus this modified implementation
 
-The full list of `kc.*` settings is documented in `login/theme.properties`.
+The upstream AUTHFIT theme currently uses `realm.getAttribute(...)` and the
+newer Keycloak login-template variables. Consequently, the upstream theme is
+intended for newer Keycloak releases and is not directly compatible with
+Keycloak 22–24.
 
-## Development
+The modified implementation provides the compatibility layer for Keycloak
+22–24. As currently installed, only Keycloak 22.0.3 has been end-to-end
+verified.
 
-No build, test, or lint tooling — this is static FreeMarker + CSS + JS deployed by mounting the directory into the Keycloak container. The dev setup mounts this folder into a local Keycloak with theme caching disabled, so changes apply on browser refresh.
+## References
 
-## Compatibility
-
-| Keycloak version | Status                             |
-| ---------------- | ---------------------------------- |
-| 26.5.5           | ✅ Primary target / tested         |
-| 22.x – 26.x      | ✅ FTL/theme API surface is stable |
-
-## Contributing
-
-Issues and PRs are welcome. If you hit a rendering quirk on a Keycloak version other than 26.5.5, please open an issue with the version and a screenshot.
-
-## License
-
-[GPL-3.0](LICENSE)
+- Upstream AUTHFIT theme: <https://github.com/salliver/AUTHFIT-Keycloak-theme-live-editor>
+- AUTHFIT login template: <https://github.com/salliver/AUTHFIT-Keycloak-theme-live-editor/blob/main/login/template.ftl>
+- Keycloak issue #30115, admin v2 custom scripts not loading: <https://github.com/keycloak/keycloak/issues/30115>
+- Keycloak 22.0.3 `RealmBean`: <https://github.com/keycloak/keycloak/blob/22.0.3/services/src/main/java/org/keycloak/forms/login/freemarker/model/RealmBean.java>
+- Keycloak 24.0.0 `RealmBean`: <https://github.com/keycloak/keycloak/blob/24.0.0/services/src/main/java/org/keycloak/forms/login/freemarker/model/RealmBean.java>
+- Keycloak 25.0.0 `RealmBean`: <https://github.com/keycloak/keycloak/blob/25.0.0/services/src/main/java/org/keycloak/forms/login/freemarker/model/RealmBean.java>
