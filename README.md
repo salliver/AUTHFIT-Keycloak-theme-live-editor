@@ -91,7 +91,7 @@ No build, test, or lint tooling — this is static FreeMarker + CSS + JS deploye
 | Keycloak version | Status                             |
 | ---------------- | ---------------------------------- |
 | 26.5.5           | ✅ Primary target / tested         |
-| 22.x – 26.x      | ✅ FTL/theme API surface is stable |
+| 22.x – 26.x      | ✅ Use the version in [Authfit Legacy Branch](https://github.com/salliver/AUTHFIT-Keycloak-theme-live-editor/tree/AUTHFIT-legacy_22.x-suport) |
 
 ## AI Contribution Disclosure
 ![Level 5](https://badgen.net/badge/AI%20Assistance/Level%205?color=orange)
