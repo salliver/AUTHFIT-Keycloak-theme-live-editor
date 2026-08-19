@@ -3,6 +3,8 @@
 This document describes the compatibility of the modified AUTHFIT theme and
 the accompanying `authfit-freemarker` provider.
 
+# To utilize this version you'll need to follow the instructions inside the "provider" folder 
+
 ## Summary
 
 | Keycloak version | Status with the current implementation |
