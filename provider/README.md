@@ -30,7 +30,7 @@ Pop-Location
 
 ## Install
 
-move the provider folder outside of the one name outhfit as that is your theme and needs to be copyed in the Themes folder inside keycloak
+move the provider folder outside of the one named Authfit as that is your theme and needs to be copyed in the Themes folder inside keycloak
 
 Copy the JAR into the Keycloak `providers` directory:
 
