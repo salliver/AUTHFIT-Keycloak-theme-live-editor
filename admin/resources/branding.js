@@ -1517,8 +1517,9 @@ function normalizeFieldValue(f, value) {
     if (hex3or6.test(v)) {
       return v.startsWith("#") ? v : "#" + v;
     }
-  return "";
-  }// valore non valido: scartato, ricade sul default del tema
+    return "";
+  }
+  return v:// valore non valido: scartato, ricade sul default del tema
 }
 
 function capFirst(s) {
