@@ -30,6 +30,8 @@ Pop-Location
 
 ## Install
 
+move the provider folder outside of the one name outhfit as that is your theme and needs to be copyed in the Themes folder inside keycloak
+
 Copy the JAR into the Keycloak `providers` directory:
 
 ```powershell
@@ -57,6 +59,7 @@ When this setting is present, the startup flag in `kc.ps1` is not required. If y
 ```
 
 After installation, Keycloak performs its provider augmentation on startup. The startup log should contain `authfit-freemarker` and a warning that the login SPI is internal; that warning is expected for Keycloak 22.0.3.
+
 
 ## FTL usage
 
