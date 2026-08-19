@@ -1517,12 +1517,12 @@ function normalizeFieldValue(f, value) {
   if (PERCENT_FIELDS.has(key) && /^\d+(\.\d+)?$/.test(v)) return v + "%";
   if (ANGLE_FIELDS.has(key) && /^\d+(\.\d+)?$/.test(v)) return v + "deg";
   if (COLOR_FIELDS.has(key)) {
-  const hex3or6 = /^#?[0-9a-fA-F]{3}$|^#?[0-9a-fA-F]{6}$/;
-  if (hex3or6.test(v)) {
-    return v.startsWith("#") ? v : "#" + v;
-  }
+    const hex3or6 = /^#?[0-9a-fA-F]{3}$|^#?[0-9a-fA-F]{6}$/;
+    if (hex3or6.test(v)) {
+      return v.startsWith("#") ? v : "#" + v;
+    }
   return ""; // valore non valido: scartato, ricade sul default del tema
-}
+  }
 }
 
 function capFirst(s) {
