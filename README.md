@@ -42,6 +42,7 @@ AUTHFIT/
 │   ├── theme.properties  # defaults for every kc.* setting
 │   └── resources/
 │       ├── css/login.css
+|       ├── js/login.js
 │       └── img/          # default background images + logo
 └── admin/                # admin console theme (parent = keycloak.v2)
     ├── theme.properties
