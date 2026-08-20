@@ -1424,7 +1424,7 @@ const PREVIEW_VARS = [
   ["btnLetterSpacing", "--btn-letter-spacing", "normal"],
 ];
 
-const VERSION_DEFAULTS = { buildNumber: "1.2.3", releaseName: "Cobalt Lark" };
+const VERSION_DEFAULTS = { buildNumber: "1.2.2", releaseName: "Cobalt Lark" };
 
 const SIZE_FIELDS = new Set([
   "titleSize",
