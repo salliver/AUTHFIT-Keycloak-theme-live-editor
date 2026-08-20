@@ -93,6 +93,26 @@ body.custom-body {
   background: var(--bg-visual);
 }
 
+/* ---------- Center layout: full-screen background, card floating centered ---------- */
+body.custom-body .split-layout.center-layout {
+  display: block;
+}
+
+body.custom-body .split-layout.center-layout .visual-column {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+body.custom-body .split-layout.center-layout .form-column {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 1;
+}
+
 /* ---------- Background media (image or video) ---------- */
 .background-image,
 .background-media {
@@ -624,5 +644,9 @@ textarea.form-input {
 @media (max-width: 600px) {
   .visual-column {
     display: none;
+  }
+
+  .split-layout.center-layout .visual-column {
+    display: block;
   }
 }

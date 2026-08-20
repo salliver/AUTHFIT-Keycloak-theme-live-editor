@@ -448,6 +448,28 @@
     white-space: nowrap;
 }
 
+/* Center layout: full-screen background, card floating centered (mirrors the login page) */
+.preview-split.center-layout {
+    position: relative;
+    display: block;
+}
+
+.preview-split.center-layout .preview-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    border-radius: 12px;
+}
+
+.preview-split.center-layout .preview-form-col {
+    position: relative;
+    width: 100%;
+    min-height: 470px;
+    z-index: 1;
+}
+
 @media (max-width: 960px) {
     .mio-branding-layout {
         flex-wrap: wrap;
@@ -478,8 +500,8 @@
     .mio-branding-tab {
         flex: 0 0 auto;
         text-align: center;
-        white-space: nowrap;
-    }
+    white-space: nowrap;
+}
 
     .mio-branding-section.mio-active {
         grid-template-columns: 1fr;

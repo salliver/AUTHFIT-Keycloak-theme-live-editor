@@ -103,7 +103,7 @@ const SECTIONS = [
         type: "select",
         attr: "kc.layoutSide",
         def: "left",
-        options: ["left", "right"],
+        options: ["left", "right", "center"],
         hint: "Which side the login card sits on. The background fills the other side.",
       },
       {
@@ -1345,7 +1345,7 @@ function themeResourcesBase(themeKey) {
     const idx = parts.indexOf("resources");
     if (idx === -1) return "";
     const origin = url.origin;
-    const theme = themeKey || (parts[idx + 1] || "");
+    const theme = themeKey || parts[idx + 1] || "";
     if (!theme) return "";
     return origin + "/resources/" + theme + "/login/";
   } catch (e) {}
@@ -1424,7 +1424,7 @@ const PREVIEW_VARS = [
   ["btnLetterSpacing", "--btn-letter-spacing", "normal"],
 ];
 
-const VERSION_DEFAULTS = { buildNumber: "1.2.3", releaseName: "Slate Raven" };
+const VERSION_DEFAULTS = { buildNumber: "1.2.3", releaseName: "Cobalt Lark" };
 
 const SIZE_FIELDS = new Set([
   "titleSize",
@@ -1503,7 +1503,10 @@ function normalizeFieldValue(f, value) {
       .join("");
     const singleNum = s.match(/^(-?\d+(?:\.\d+)?)px$/);
     if (singleNum)
-      s = "0 " + Math.abs(Number(singleNum[1])) + "px 40px rgba(15, 23, 42, 0.15)";
+      s =
+        "0 " +
+        Math.abs(Number(singleNum[1])) +
+        "px 40px rgba(15, 23, 42, 0.15)";
     if (
       s &&
       typeof CSS !== "undefined" &&
@@ -1521,8 +1524,9 @@ function normalizeFieldValue(f, value) {
     if (hex3or6.test(v)) {
       return v.startsWith("#") ? v : "#" + v;
     }
-  return ""; // valore non valido: scartato, ricade sul default del tema
+    return ""; // valore non valido: scartato, ricade sul default del tema
   }
+  return v;
 }
 
 function capFirst(s) {
@@ -1765,6 +1769,10 @@ function updatePreview() {
     "--layout-direction",
     layoutSide === "right" ? "row-reverse" : "row",
   );
+  const previewSplit = el.querySelector(".preview-split");
+  if (previewSplit) {
+    previewSplit.classList.toggle("center-layout", layoutSide === "center");
+  }
   const bgFit = (rawValue("backgroundFit") || "cover").trim().toLowerCase();
   el.style.setProperty(
     "--bg-size",
@@ -1779,26 +1787,52 @@ function updatePreview() {
         : "cover",
   );
   [
-    ["bgPage", "--bg-page", "#f8fafc", "bgPageGradient", "bgPageGradientStart", "bgPageGradientEnd", "bgPageGradientAngle"],
-    ["formBgColor", "--bg-card", "#ffffff", "formBgGradient", "formBgGradientStart", "formBgGradientEnd", "formBgGradientAngle"],
-    ["bgVisualColor", "--bg-visual", "#0a192f", "bgVisualGradient", "bgVisualGradientStart", "bgVisualGradientEnd", "bgVisualGradientAngle"],
-  ].forEach(([solidKey, cssVar, fallback, modeKey, startKey, endKey, angleKey]) => {
-    const mode = (rawValue(modeKey) || "solid").trim().toLowerCase();
-    let val =
-      normalizeFieldValue(fieldDef(solidKey), rawValue(solidKey)) || fallback;
-    if (mode === "gradient") {
-      const angle = normalizeFieldValue(
-        fieldDef(angleKey),
-        rawValue(angleKey) || "135",
-      );
-      const start =
-        normalizeFieldValue(fieldDef(startKey), rawValue(startKey)) || val;
-      const end =
-        normalizeFieldValue(fieldDef(endKey), rawValue(endKey)) || val;
-      val = "linear-gradient(" + angle + ", " + start + ", " + end + ")";
-    }
-    el.style.setProperty(cssVar, val);
-  });
+    [
+      "bgPage",
+      "--bg-page",
+      "#f8fafc",
+      "bgPageGradient",
+      "bgPageGradientStart",
+      "bgPageGradientEnd",
+      "bgPageGradientAngle",
+    ],
+    [
+      "formBgColor",
+      "--bg-card",
+      "#ffffff",
+      "formBgGradient",
+      "formBgGradientStart",
+      "formBgGradientEnd",
+      "formBgGradientAngle",
+    ],
+    [
+      "bgVisualColor",
+      "--bg-visual",
+      "#0a192f",
+      "bgVisualGradient",
+      "bgVisualGradientStart",
+      "bgVisualGradientEnd",
+      "bgVisualGradientAngle",
+    ],
+  ].forEach(
+    ([solidKey, cssVar, fallback, modeKey, startKey, endKey, angleKey]) => {
+      const mode = (rawValue(modeKey) || "solid").trim().toLowerCase();
+      let val =
+        normalizeFieldValue(fieldDef(solidKey), rawValue(solidKey)) || fallback;
+      if (mode === "gradient") {
+        const angle = normalizeFieldValue(
+          fieldDef(angleKey),
+          rawValue(angleKey) || "135",
+        );
+        const start =
+          normalizeFieldValue(fieldDef(startKey), rawValue(startKey)) || val;
+        const end =
+          normalizeFieldValue(fieldDef(endKey), rawValue(endKey)) || val;
+        val = "linear-gradient(" + angle + ", " + start + ", " + end + ")";
+      }
+      el.style.setProperty(cssVar, val);
+    },
+  );
   const logoMode = (rawValue("logoPositionMode") || "default")
     .trim()
     .toLowerCase();
@@ -1987,7 +2021,9 @@ async function saveBranding() {
     });
     ["bgPage", "formBg", "bgVisual"].forEach((p) => {
       const modeF = fieldDef(p + "Gradient");
-      const mode = modeF ? normalizeFieldValue(modeF, getFieldValue(modeF)) : "";
+      const mode = modeF
+        ? normalizeFieldValue(modeF, getFieldValue(modeF))
+        : "";
       if (mode !== "gradient") {
         delete attrs["kc." + p + "GradientStart"];
         delete attrs["kc." + p + "GradientEnd"];
@@ -2067,7 +2103,7 @@ function exportPreset() {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  setMsg('success', 'Preset exported as "' + a.download + '".');
+  setMsg("success", 'Preset exported as "' + a.download + '".');
 }
 
 function copyPresetJson() {
@@ -2105,7 +2141,10 @@ function applyPreset(text) {
     throw new Error("Not a valid JSON / .afit file.");
   }
   const values =
-    data && typeof data === "object" && data.values && typeof data.values === "object"
+    data &&
+    typeof data === "object" &&
+    data.values &&
+    typeof data.values === "object"
       ? data.values
       : data;
   if (!values || typeof values !== "object" || Array.isArray(values))
@@ -2137,7 +2176,9 @@ function applyPreset(text) {
   updatePreview();
   setMsg(
     "success",
-    "Preset applied (" + applied + " values). Press Save to store it for this realm.",
+    "Preset applied (" +
+      applied +
+      " values). Press Save to store it for this realm.",
   );
 }
 

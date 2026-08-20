@@ -67,6 +67,7 @@
     <#assign logoPosTop = themeAttr('kc.logoPosTop', properties.logoPosTop!)>
     <#assign logoPosBottom = themeAttr('kc.logoPosBottom', properties.logoPosBottom!)>
     <#assign btnRadius = themeAttr('kc.btnRadius', properties.btnRadius!)>
+    <#assign layoutSide = themeAttr('kc.layoutSide', properties.layoutSide!)>
     <#assign footerText = themeAttr('kc.footerText', properties.footerText!)>
     <#if fontUrl?has_content>
         <link rel="stylesheet" href="${fontUrl}">
@@ -123,7 +124,7 @@
 </head>
 
 <body class="${properties.kcBodyClass!} custom-body">
-    <div class="split-layout">
+    <div class="split-layout <#if layoutSide == 'center'>center-layout</#if>">
         <!-- Left column: Form -->
         <div class="form-column">
             <div class="form-card">
