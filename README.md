@@ -1,11 +1,13 @@
 # AUTHFIT — Keycloak login theme with live branding editor
-
+<div align="center">
+    
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 [![Keycloak](https://img.shields.io/badge/Keycloak-22–26.x-4d4d4d)](#Compatibility)
 [![No build step](https://img.shields.io/badge/build-none-brightgreen)](#Installation)
 ![Status](https://img.shields.io/badge/status-active-success)
 [![Level 5](https://badgen.net/badge/AI%20Assistance/Level%205?color=orange)](#AI-Contribution-Disclosure)
-
+    
+</div>
 A custom login theme for **Keycloak 26.x** (FreeMarker + CSS + plain JS, no build step) that turns every branded surface of the login page into per-realm settings. It ships with a floating **Branding** editor injected into the admin console, so non-technical users can restyle the login page live and save per realm — no rebuild, no redeploy.
 
 Built for Keycloak `26.5.5`, with a `legacy` version to support 22–25.
